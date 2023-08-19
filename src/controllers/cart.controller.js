@@ -1,11 +1,13 @@
 const catchError = require('../utils/catchError');
 const Cart = require('../models/Cart');
+const Product = require('../models/Product');
+const Category = require('../models/Category');
 
 const getAll = catchError(async(req, res) => {
     const userId= req.user.id;
     //const productId = req.product.id
     const results = await Cart.findAll({
-        where: {userId},
+         where: {userId},
         include:[{
             model:Product,
             attributes:{exclude: ['createdAt', 'updatedAt']},
@@ -16,8 +18,7 @@ const getAll = catchError(async(req, res) => {
                 },
                 
             ]
-        }]
-    });
+        }]});
     return res.json(results);
 });
 
