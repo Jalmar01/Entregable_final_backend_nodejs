@@ -53,7 +53,6 @@ test("POST -> 'URL_PURCHASE', should return status code 201, res.body.quantity =
         .set("Authorization", `Bearer ${TOKEN}`)
  
     expect(res.status).toBe(201)
-    //expect(res.body).toBeDefined()
     expect(res.body[0].quantity).toBe(bodyCart.quantity)
 
 })
