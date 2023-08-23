@@ -1,6 +1,7 @@
 const request = require('supertest')
 const app = require('../app')
 const Category = require('../models/Category')
+const ProductImg = require('../models/ProductImg')
 require('../models')
 
 const URL_PRODUCT = '/api/v1/products'
@@ -9,6 +10,8 @@ let TOKEN
 let product
 let category
 let productId
+let createImg
+
 beforeAll(async () => {
     const user = {
         email:"sergio@gmail.com",
@@ -102,6 +105,30 @@ test("UPDATE -> 'URL_PRODUCT/:id' should return status code 200,res.body to be d
    
 })
 
+
+test("POST -> 'URL_PRODUCT/:id/IMAGES', should return status code 200, res.body to be defined and res.body.length === 1", async () => {
+
+    const images = {
+      url:"lorem40",
+      filename:"lorem10",
+    }
+  
+    const createImg = await ProductImg.create(images)
+  
+    const res = await request(app)
+        .post(`${URL_PRODUCT}/${productId}/images`)
+        .send([createImg.id])
+        .set('Authorization', `Bearer ${TOKEN}`)
+        
+   expect(res.status).toBe(200)
+   expect(res.body).toBeDefined()
+   expect(res.body).toHaveLength(1)
+   expect(res.body[0].id).toBe(createImg.id)
+
+   await createImg.destroy()
+  
+  })
+
 test("DELETE -> 'URL_PRODUCT/:id' should return status code 204", async() => {
     
      const res = await request(app)
@@ -111,6 +138,7 @@ test("DELETE -> 'URL_PRODUCT/:id' should return status code 204", async() => {
      expect(res.status).toBe(204)
  
      await category.destroy()
-    
+
+ 
  })
 

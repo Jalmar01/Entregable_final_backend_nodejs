@@ -8,7 +8,6 @@ const URL_USER = '/api/v1/users/login'
 const URL_CART =  '/api/v1/cart'
 let TOKEN
 let userId
-let productBody
 let product 
 let bodyCart
 
@@ -68,6 +67,10 @@ test("GET-> 'URL_PURCHASE', should return staus code 200, and res.body.length ==
     expect(res.body[0].userId).toBe(userId)
     expect(res.body[0].product).toBeDefined()
     expect(res.body[0].product.id).toBe(product.id)
+
+    expect(res.body[0].product.productImgs).toBeDefined()
+   // expect(res.body[0].productId).toBe(product.id)
+   //expect(res.body[0].product.productImgs).toHaveLength(0)
 
     await product.destroy()
 })

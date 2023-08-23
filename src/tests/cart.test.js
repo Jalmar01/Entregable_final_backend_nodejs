@@ -59,14 +59,17 @@ test("GET -> 'URL_CART',should return status code 200 and res.body.length === 1"
     const res = await request(app)
       .get(URL_CART)
       .set("Authorization", `Bearer ${TOKEN}`)
-  
+
     expect(res.status).toBe(200)
     expect(res.body).toBeDefined()
     expect(res.body).toHaveLength(1)
     expect(res.body[0].userId).toBe(userId)
     expect(res.body[0].product).toBeDefined()
+    expect(res.body[0].product.productImgs).toBeDefined()
     expect(res.body[0].productId).toBe(product.id)
+   // expect(res.body[0].productId).toBe(product.id)
     expect(res.body[0].product.id).toBe(product.id)
+   //expect(res.body[0].product.productImgs).toHaveLength(0)
 
   })
 
@@ -84,6 +87,7 @@ test("GET -> 'URL_CART',should return status code 200 and res.body.length === 1"
     expect(res.body.quantity).toBe(bodyUpdate.quantity)
 
   })
+
 
   test("DELETE -> 'URL_CART/:id',should return status code 204", async () => {
     

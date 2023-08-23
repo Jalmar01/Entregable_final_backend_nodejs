@@ -14,6 +14,6 @@ routerProduct.route('/:id')
     .put(verifyJwt, update);
 
 routerProduct.route('/:id/images')
-    .post(setImg)
+    .post(verifyJwt, setImg)
 
 module.exports = routerProduct;
